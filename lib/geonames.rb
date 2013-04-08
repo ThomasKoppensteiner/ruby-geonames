@@ -17,6 +17,8 @@
 #
 #=============================================================================
 
+require 'geonames/version'
+
 module Geonames
   autoload :BoundingBox,              'geonames/bounding_box'
   autoload :Config,                   'geonames/config'
@@ -29,7 +31,6 @@ module Geonames
   autoload :Toponym,                  'geonames/toponym'
   autoload :ToponymSearchCriteria,    'geonames/toponym_search_criteria'
   autoload :ToponymSearchResult,      'geonames/toponym_search_result'
-  autoload :Version,                  'geonames/version'
   autoload :WebService,               'geonames/web_service'
   autoload :WikipediaArticle,         'geonames/wikipedia_article'
 
