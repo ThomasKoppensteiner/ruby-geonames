@@ -39,7 +39,7 @@ module Geonames
 
   class << self
     def config
-      Thread.current[:geonames_config] ||= Geonames::Config.new
+      @config ||= Geonames::Config.new
     end
 
     %w(base_url lang username token).each do |method|
