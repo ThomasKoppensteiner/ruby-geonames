@@ -4,12 +4,14 @@ module Geonames
   describe WebService do
     describe ".country_info" do
       subject { country_info }
-      let(:country_info) { WebService.country_info(country_code) }
-      let(:response) { File.read File.join(File.dirname(__FILE__), '..', '..', 'fixtures', 'country_info', fixture) }
+      let(:country_info) { described_class.country_info(country_code) }
+
+      include_context "when geonames is called"
+      let(:geonames_url)   { "http://api.geonames.org/countryInfo?a=a&country=#{country_code}&lang=en" }
+      let(:fixture_folder) { "country_info" }
+      let(:fixture_file)   { "thailand.xml" }
 
       context "with a country code of 'TH'" do
-        before { FakeWeb.register_uri :get, /\/countryInfo\?.*&country=#{country_code}/, :response => response }
-        let(:fixture) { "thailand.xml.http" }
         let(:country_code) { "TH" }
 
         it { should be_a_kind_of(CountryInfo) }

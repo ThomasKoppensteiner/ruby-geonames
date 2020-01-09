@@ -1,14 +1,5 @@
-HTTP/1.1 200 OK
-Date: Sat, 13 Nov 2010 18:08:10 GMT
-Server: Apache/2.2.13 (Linux/SUSE)
-Cache-Control: no-cache
-Access-Control-Allow-Origin: *
-Transfer-Encoding: chunked
-Content-Type: text/xml;charset=UTF-8
-
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <geonames>
-<totalResultsCount>5</totalResultsCount>
 <code>
 <postalcode>L1G</postalcode>
 <name>Oshawa Central</name>
@@ -21,6 +12,7 @@ Content-Type: text/xml;charset=UTF-8
 <adminName2/>
 <adminCode3/>
 <adminName3/>
+<distance>0.0</distance>
 </code>
 <code>
 <postalcode>L1H</postalcode>
@@ -34,19 +26,7 @@ Content-Type: text/xml;charset=UTF-8
 <adminName2/>
 <adminCode3/>
 <adminName3/>
-</code>
-<code>
-<postalcode>L1J</postalcode>
-<name>Oshawa Southwest</name>
-<countryCode>CA</countryCode>
-<lat>43.85869</lat>
-<lng>-78.83412</lng>
-<adminCode1>ON</adminCode1>
-<adminName1>Ontario</adminName1>
-<adminCode2/>
-<adminName2/>
-<adminCode3/>
-<adminName3/>
+<distance>0.14339342626125087</distance>
 </code>
 <code>
 <postalcode>L1K</postalcode>
@@ -60,18 +40,34 @@ Content-Type: text/xml;charset=UTF-8
 <adminName2/>
 <adminCode3/>
 <adminName3/>
+<distance>4.718573024057838</distance>
 </code>
 <code>
-<postalcode>L1L</postalcode>
-<name>Oshawa North</name>
+<postalcode>L1J</postalcode>
+<name>Oshawa Southwest</name>
 <countryCode>CA</countryCode>
-<lat>43.95266</lat>
-<lng>-78.87951</lng>
+<lat>43.85869</lat>
+<lng>-78.83412</lng>
 <adminCode1>ON</adminCode1>
 <adminName1>Ontario</adminName1>
 <adminCode2/>
 <adminName2/>
 <adminCode3/>
 <adminName3/>
+<distance>5.048786575645401</distance>
+</code>
+<code>
+<postalcode>L1R</postalcode>
+<name>Whitby Central</name>
+<countryCode>CA</countryCode>
+<lat>43.90182</lat>
+<lng>-78.93465</lng>
+<adminCode1>ON</adminCode1>
+<adminName1>Ontario</adminName1>
+<adminCode2/>
+<adminName2/>
+<adminCode3/>
+<adminName3/>
+<distance>5.545591396672559</distance>
 </code>
 </geonames>

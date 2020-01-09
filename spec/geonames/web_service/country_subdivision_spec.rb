@@ -3,14 +3,15 @@ require 'spec_helper'
 module Geonames
   describe WebService do
     describe ".country_subdivision" do
-      subject { WebService.country_subdivision(latitude, longitude) }
-      let(:response) { File.read File.join(File.dirname(__FILE__), '..', '..', 'fixtures', 'country_subdivision', fixture) }
-
-      before { FakeWeb.register_uri :get, /\/countrySubdivision\?.*lat=#{latitude}&lng=#{longitude}/, :response => response }
-      let(:fixture) { "ontario.xml.http" }
+      subject { described_class.country_subdivision(latitude, longitude) }
 
       let(:latitude)  { +43.900120387 }
       let(:longitude) { -78.882869834 }
+
+      include_context "when geonames is called"
+      let(:geonames_url)   { "http://api.geonames.org/countrySubdivision?a=a&lang=en&lat=#{latitude}&lng=#{longitude}&maxRows=1&radius=0&type=xml" }
+      let(:fixture_folder) { "country_subdivision" }
+      let(:fixture_file)   { "ontario.xml" }
 
       it { should be_a_kind_of(Array) }
 
@@ -19,6 +20,23 @@ module Geonames
           element.should be_a_kind_of CountrySubdivision
         end
       end
+
+      # TODO add compare method
+
+      # let(:expected_subdivisions) do
+      #   [
+      #     Geonames::CountrySubdivision.new.tap do |csd|
+      #       csd.code_fips    = "08"
+      #       csd.admin_name_1 = "Ontario"
+      #       csd.admin_code_1 = "08"
+      #       csd.code_iso     = "ON"
+      #       csd.country_name = "Canada"
+      #       csd.country_code = "CA"
+      #     end
+      #   ]
+      # end
+      #
+      # it { expect(subject).to match expected_subdivisions }
     end
   end
 end

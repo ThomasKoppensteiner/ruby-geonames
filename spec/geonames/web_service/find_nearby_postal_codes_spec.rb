@@ -3,18 +3,15 @@ require 'spec_helper'
 module Geonames
   describe WebService do
     describe ".find_nearby_postal_codes" do
-      subject { WebService.find_nearby_postal_codes(criteria) }
-      let(:response) { File.read File.join(File.dirname(__FILE__), '..', '..', 'fixtures', 'find_nearby_postal_codes', fixture) }
+      subject { described_class.find_nearby_postal_codes(criteria) }
+
+      include_context "when geonames is called"
+      let(:geonames_url)   { "http://api.geonames.org/findNearbyPostalCodes?a=a&lang=en&placename=Oshawa" }
+      let(:fixture_folder) { "find_nearby_postal_codes" }
+      let(:fixture_file)   { "oshawa.xml" }
 
       context "lookup by place name" do
-        before { FakeWeb.register_uri :get, /\/findNearbyPostalCodes\?.*&placename=Oshawa/, :response => response }
-        let(:fixture) { "oshawa.xml.http" }
-
-        let :criteria do
-          Geonames::PostalCodeSearchCriteria.new.tap do |criteria|
-            criteria.place_name = "Oshawa"
-          end
-        end
+        let(:criteria) { Geonames::PostalCodeSearchCriteria.new(place_name: "Oshawa") }
 
         it { should be_a_kind_of(Array) }
 

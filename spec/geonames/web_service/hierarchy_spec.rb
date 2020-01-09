@@ -3,13 +3,14 @@ require 'spec_helper'
 module Geonames
   describe WebService do
     describe ".hierarchy" do
-      subject { WebService.hierarchy(geonameId) }
-      let(:response) { File.read File.join(File.dirname(__FILE__), '..', '..', 'fixtures', 'hierarchy', fixture) }
-
-      before { FakeWeb.register_uri :get, /\/hierarchy\?geonameId=#{geonameId}/, :response => response }
-      let(:fixture) { "zurich.xml.http" }
+      subject { described_class.hierarchy(geonameId) }
 
       let(:geonameId)  { 2657896 }
+
+      include_context "when geonames is called"
+      let(:geonames_url)   { "http://api.geonames.org/hierarchy?geonameId=2657896&lang=en" }
+      let(:fixture_folder) { "hierarchy" }
+      let(:fixture_file)   { "zurich.xml" }
 
       it { should be_a_kind_of(Array) }
 
