@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'bundler/setup'
 require 'rspec/autorun'
+require 'rspec/its'
 
 RSpec.configure do |config|
   config.mock_with :rspec
