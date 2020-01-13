@@ -3,14 +3,15 @@ require 'spec_helper'
 module Geonames
   describe WebService do
     describe ".find_nearby" do
-      subject { WebService.find_nearby(latitude, longitude) }
-      let(:response) { File.read File.join(File.dirname(__FILE__), '..', '..', 'fixtures', 'find_nearby', fixture) }
-
-      before { FakeWeb.register_uri :get, /\/findNearby\?.*lat=#{latitude}&lng=#{longitude}/, :response => response }
-      let(:fixture) { "wilkinson.xml.http" }
+      subject { described_class.find_nearby(latitude, longitude) }
 
       let(:latitude)  { +37.501707 }
       let(:longitude) { -122.468838 }
+
+      include_context "when geonames is called"
+      let(:geonames_url)   { "http://api.geonames.org/findNearby?lang=en&lat=37.501707&lng=-122.468838" }
+      let(:fixture_folder) { "find_nearby" }
+      let(:fixture_file)   { "wilkinson.xml" }
 
       it { should be_a_kind_of(Array) }
 
@@ -22,14 +23,16 @@ module Geonames
     end
 
     describe ".find_nearby with full-style" do
+      subject { described_class.find_nearby(latitude, longitude, style: 'FULL') }
+
       let(:latitude)  { 48.18 }
       let(:longitude) { 14.11 }
-      
-      before { FakeWeb.register_uri :get, /\/findNearby\?.*lat=#{latitude}&lng=#{longitude}/, :response => response }
-      let(:fixture) { "marchtrenk.xml.http" }
-      let(:response) { File.read File.join(File.dirname(__FILE__), '..', '..', 'fixtures', 'find_nearby', fixture) }
 
-      subject { WebService.find_nearby(latitude, longitude, style: 'FULL') }
+      include_context "when geonames is called"
+
+      let(:geonames_url)   { "http://api.geonames.org/findNearby?lang=en&lat=48.18&lng=14.11&style=FULL" }
+      let(:fixture_folder) { "find_nearby" }
+      let(:fixture_file)   { "marchtrenk.xml" }
 
       it "return full Toponym instance" do
         subject.each do |element|

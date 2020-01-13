@@ -4,13 +4,14 @@ module Geonames
   describe WebService do
 
     describe ".search Marchtrenk with full-style" do
-      let(:query)  { "Marchtrenk" }
-      
-      before { FakeWeb.register_uri :get, /\/search\?.*q=#{query}/, :response => response }
-      let(:fixture) { "marchtrenk.xml.http" }
-      let(:response) { File.read File.join(File.dirname(__FILE__), '..', '..', 'fixtures', 'search', fixture) }
+      subject { described_class.search(ToponymSearchCriteria.new(q: query, style: 'FULL')) }
 
-      subject { WebService.search(ToponymSearchCriteria.new(q: query, style: 'FULL')) }
+      let(:query)  { "Marchtrenk" }
+
+      include_context "when geonames is called"
+      let(:geonames_url)   { "http://api.geonames.org/search?a=a&lang=en&q=Marchtrenk&style=FULL" }
+      let(:fixture_folder) { "search" }
+      let(:fixture_file)   { "marchtrenk.xml" }
 
       it "return full Toponym instance" do
         subject.toponyms.each do |element|
@@ -18,31 +19,33 @@ module Geonames
         end
       end
     end
-    
-    describe ".search Upper Austria with full-style" do
-      let(:query)  { "Upper Austria" }
-      
-      before { FakeWeb.register_uri :get, /\/search\?.*q=#{query.gsub(' ','.')}.*/, :response => response }
-      let(:fixture) { "upper_austria.xml.http" }
-      let(:response) { File.read File.join(File.dirname(__FILE__), '..', '..', 'fixtures', 'search', fixture) }
 
-      subject { WebService.search(ToponymSearchCriteria.new(q: query, style: 'FULL', max_rows: "1")).toponyms.first }
+    describe ".search Upper Austria with full-style" do
+      subject { described_class.search(ToponymSearchCriteria.new(q: query, style: 'FULL', max_rows: "1")).toponyms.first }
+
+      let(:query)  { "Upper Austria" }
+
+      include_context "when geonames is called"
+      let(:geonames_url)   { "http://api.geonames.org/search?a=a&lang=en&maxRows=1&q=Upper%20Austria&style=FULL" }
+      let(:fixture_folder) { "search" }
+      let(:fixture_file)   { "upper_austria.xml" }
 
       it "return full Toponym instance" do
         subject.should be_a_kind_of Toponym
         subject.alternate_names.count.should == 7
       end
     end
-    
+
     describe ".search Austria with full-style" do
+      subject { described_class.search(ToponymSearchCriteria.new(q: query, country_code: country_code, style: 'FULL', max_rows: "1")).toponyms.first }
+
       let(:query)         { "Austria" }
       let(:country_code)  { "AT" }
-      
-      before { FakeWeb.register_uri :get, /\/search\?.*q=#{query}.*/, :response => response }
-      let(:fixture) { "austria.xml.http" }
-      let(:response) { File.read File.join(File.dirname(__FILE__), '..', '..', 'fixtures', 'search', fixture) }
 
-      subject { WebService.search(ToponymSearchCriteria.new(q: query, country_code: country_code, style: 'FULL', max_rows: "1")).toponyms.first }
+      include_context "when geonames is called"
+      let(:geonames_url)   { "http://api.geonames.org/search?a=a&country=AT&lang=en&maxRows=1&q=Austria&style=FULL" }
+      let(:fixture_folder) { "search" }
+      let(:fixture_file)   { "austria.xml" }
 
       it "return full Toponym instance" do
         subject.should be_a_kind_of Toponym

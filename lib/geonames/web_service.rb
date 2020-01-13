@@ -160,7 +160,7 @@ module Geonames
       url << search_criteria.to_query_params_string
 
       res = make_request(url, args)
-      
+
       doc = REXML::Document.new res.body
 
       doc.elements.each("geonames/code") do |element|
@@ -269,13 +269,11 @@ module Geonames
       options.update(args.last.is_a?(Hash) ? args.pop : {})
 
       uri = URI.parse(url)
-      req = Net::HTTP::Get.new("#{uri.path}?#{uri.query}", 'User-Agent' => USER_AGENT)
 
-      Net::HTTP.start(uri.host, uri.port) do |http|
-        http.read_timeout = options[:read_timeout]
-        http.open_timeout = options[:open_timeout]
-        http.request(req)
-      end
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.read_timeout = options[:read_timeout]
+      http.open_timeout = options[:open_timeout]
+      http.request(Net::HTTP::Get.new(uri.request_uri))
     end
 
     def findNearbyWikipedia(hashes)
